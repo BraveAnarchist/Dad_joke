@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Jokes Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to left bottom, lightblue, lightpink, lightblue);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, .3);
+            padding: 20px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            width: 85%;
+            text-align: center;
+            color: darkgreen;
+        }
+
+        .heading {
+            font-size: 35px;
+            font-weight: 200;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-shadow: 5px 5px 2px rgba(0, 0, 0, .3);
+            letter-spacing: 2px;
+        }
+
+        .joke {
+            font-size: 25px;
+            font-weight: 500;
+            margin: 40px;
+        }
+
+        .btn {
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, .3);
+            border-color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            width: 300px;
+            color: darkgreen;
+        }
+
+        .dark-mode {
+            background: #333;
+            color: #fff;
+            text-shadow: none;
+        }
+        .zoom {
+            display: inline;
+        }
+        .zoom button{
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, .3);
+            border-color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            color: darkgreen;
+            padding:10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">Dad Joke Generator</h1>
+        <p class="joke animate__animated animate__rubberBand">Dad Joke</p>
+        <div class="zoom" ><button>+</button><button>-</button></div>
+        <button class="btn joke" id="joke">Tell me a joke</button>
+        <button class="btn dar" >Dark Mode</button>
+    </div>
+    <script>
+        const btn = document.querySelector("#joke");
+        const input = document.querySelector("input");
+        btn.addEventListener("click", async () => {
+            document.querySelector("p").innerText = "Updating...";
+            
+            const rep = await fetch('https://api.api-ninjas.com/v1/dadjokes', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': 'eJHtvjQtYpUpFOs+GBqZqw==xysPzBsLPLtMcJFs'
+                }
+            })
+            const obj = await rep.json();
+            document.querySelector("p").innerText = obj[0].joke;
+
+        })
+        document.querySelector(".dar").addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+        let fontS=25;
+        document.querySelector("button:nth-child(1)").addEventListener('click', function () {
+            fontS++;
+            document.querySelector("p").style.fontSize=fontS+"px";
+        });
+        document.querySelector("button:nth-child(2)").addEventListener('click', function () {
+            fontS--;
+            document.querySelector("p").style.fontSize=fontS+"px";
+        });
+    </script>
+</body>
+
+</html>
